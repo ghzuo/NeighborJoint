@@ -14,9 +14,11 @@
 
 using namespace std;
 
+// ... only distance matrix
 class Mdist{
-    size_t ng;
+    int ng;
     vector<double> dist;
+    vector<string> name;
 
     void _setdist(size_t, size_t, double);
     double _getdist(size_t, size_t) const;
@@ -24,30 +26,38 @@ class Mdist{
 public:
     Mdist();
 
+    // read the matrix
+    void readmtx(const string&);
+    void readmtxnc(const string&);
+    void readmtxtxt(const string&);
+
+    // output the matrix
+    void writemtx(const string&);
+    void writemtxnc(const string&);
+    void writemtxtxt(const string&);
+
+    // reduce the matrix by name or index list
+    void reduce(const vector<size_t>&);
+    void reduce(const vector<string>&);
+
+    // extent the matrix
+    void extend(const vector<string>&, const vector<double>&);
+    void extend(const vector<string>&);
+    void extend(const vector<double>&);
+
+    // get/set value of matrix
     double getdist(size_t, size_t) const;
+    string getname(size_t) const;
     void setdist(size_t, size_t, double);
+    void setname(size_t, const string&);
 
-    void push_back(const vector<double>&);
-    void erase(size_t);
-
+    // global options
     void resize(size_t);
-    void extend(size_t);
-
     size_t size() const;
     size_t msize() const;
     size_t capacity() const;
 };
 
-// read and write the tranditional infile for distance matrix and name list
-void readmtx(const string&, Mdist&, vector<string>&);
-void readmtxnc(const string&, Mdist&, vector<string>&);
-void readmtxtxt(const string&, Mdist&, vector<string>&);
-void writemtx(const string&, const Mdist&, const vector<string>&);
-void writemtxnc(const string&, const Mdist&, const vector<string>&);
-void writemtxtxt(const string&, const Mdist&, const vector<string>&);
-
-// readjust the distance matrix and their name by the index list
-void adjustmtx(const vector<size_t>&, Mdist&, vector<string>&);
 #endif
 
 #ifndef NCERR

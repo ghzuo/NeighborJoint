@@ -13,13 +13,13 @@ int separateWord(vector<string>& w, string t){
     vector<string> words_t;
     string::size_type pos = 0, prev_pos = 0;
     while((pos = t.find_first_of(' ',pos)) != string::npos){
-	words_t.push_back(t.substr(prev_pos,pos - prev_pos));
+	words_t.emplace_back(t.substr(prev_pos,pos - prev_pos));
 	prev_pos = ++pos;
     }
-    words_t.push_back(t.substr(prev_pos, pos - prev_pos));
+    words_t.emplace_back(t.substr(prev_pos, pos - prev_pos));
     for(vector<string>::iterator it = words_t.begin();it != words_t.end();++it){
 	string s_t = *it;
-	if(s_t.size() != 0) w.push_back(s_t);
+	if(s_t.size() != 0) w.emplace_back(s_t);
     }
     return w.size();
 }
@@ -57,33 +57,29 @@ string getsuffix(const string& nm){
 
 /// change string to number
 int str2int(const string& str){
-    return boost::lexical_cast<int>(trim(str));
+    return stoi(trim(str));
 }
 
 float str2float(const string& str){
-    return boost::lexical_cast<float>(trim(str));
+    return stof(trim(str));
 }
 
 double str2double(const string& str){
-    return boost::lexical_cast<double>(trim(str));
+    return stod(trim(str));
 }
 
 /// upping and lower the charater
 string toUpper(const string& s){
-    string::const_iterator it=s.begin();
-    string::const_iterator itEnd=s.end();
-    string ss;
-    for(; it != itEnd; ++it)
-        ss.push_back(toupper(*it));
+    string ss(s);
+    for(auto &ch : ss)
+	ch = toupper(ch);
     return ss;
 }
 
 string toLower(const string& s){
-    string::const_iterator it=s.begin();
-    string::const_iterator itEnd=s.end();
-    string ss;
-    for(; it != itEnd; ++it)
-        ss.push_back(tolower(*it));
+    string ss(s);
+    for(auto &ch : ss)
+	ch = tolower(ch);
     return ss;
 }
 

@@ -6,48 +6,40 @@
 #include <string>
 #include <vector>
 #include <set>
-#include <tr1/unordered_map>
+#include <unordered_map>
 #include <math.h>
+#include <algorithm>
 
 #include "stringOpt.h"
 #include "global.h"
 using namespace std;
 
 struct Node{
+    typedef vector<Node*> Children;
+
     string name;
     size_t id;
     double length;
     Node* parent;
-    set<Node*> children;
-
-    size_t taxSize, nleaf, nxleaf;
-    bool todefine;
+    Children children;
 
     Node();
+    Node(size_t);
+    Node(size_t, const string&);
+    Node(size_t, const vector<Node*>&);
 
     void clear();
-    void addChild(Node&);
+    void addChild(Node*);
+    void deleteChild(Node*);
     void getDescendants(vector<Node*>&);
     void getLeafs(vector<Node*>&);
-    bool isLeaf();
-    
-    size_t checkTodefine();
-    void getDefineLeafs(vector<Node*>&);
-
-    void _getPrediction(string&);
-    void outPrediction(ostream&);
+    bool isLeaf();    
 
     Node* resetroot(const string&);
     Node* resetroot(Node*);
 
     void _outnwk(ostream&);
     void outnwk(ostream&);
-    void _innwk(istream&);
-    void innwk(istream&);
-
-    void outjson(ostream&);
-    void outjsonAbbr(ostream&);
-    void renewId(const tr1::unordered_map<string,size_t>&);
 };
 
 #endif

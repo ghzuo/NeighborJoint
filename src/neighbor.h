@@ -14,35 +14,21 @@
 #include "global.h"
 #include "tree.h"
 #include "distmatrix.h"
+#include "neighborJoint.h"
 using namespace std;
 
 // read arguments
 struct Args{
-    string program, distfile, listfile, outfile;
+    string program, distfile, outfile;
+    vector<size_t> splist;
     bool netcdf;
     
     Args(int, char**);
     void usage();
 };
 
-typedef vector<Node*> StarTree;
-
 // select the genomes to build the tree
 void selectLeafs(const Mdist&, const string&, vector<Node*>&);
 
-// build the tree by neighbor joint algorithm
-Node* neighborJoint(Mdist&, const vector<Node*>&);
-
-// the distance from the star point
-void lenStar(const StarTree&, const Mdist&);
-
-// reset the distance of the nearest neighbor
-void njnearest(const Mdist&, StarTree&, StarTree::iterator&, StarTree::iterator&);
-
-// joint the two neighbors
-
-// reset the distance of the nearest neighbor
-void joint(Mdist&, StarTree&, StarTree::iterator&, StarTree::iterator&);
-void recjoint(Mdist&, StarTree&, StarTree::iterator&, StarTree::iterator&);
 
 #endif

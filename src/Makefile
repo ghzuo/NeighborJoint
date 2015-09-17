@@ -1,19 +1,12 @@
-NEIGHBOR = tree.o stringOpt.o neighbor.o distmatrix.o
+NEIGHBOR = tree.o stringOpt.o neighbor.o distmatrix.o neighborJoint.o
 
 BINS = neighbor 
 
-FC = gfortran
-CC = gcc
+CC = gcc -std=c11
+CXX = g++ -std=c++11
 
-CXX = g++
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Darwin)
-	CXX = g++-4.2
-endif
-
-FFLAGS  = -O3
-CFLAG = -O3  
-LIBS = -lz -lnetcdf -lnetcdf_c++ 
+CFLAGS = -O3 -I/usr/local/include
+LIBS = -lz -lnetcdf -lnetcdf_c++ -L/usr/local/lib 
 
 all: $(BINS)
 
