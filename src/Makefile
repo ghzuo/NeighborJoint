@@ -5,8 +5,16 @@ BINS = neighbor
 CC = gcc -std=c11
 CXX = g++ -std=c++11
 
-CFLAGS = -O3 -I/usr/local/include
 LIBS = -lz -lnetcdf -lnetcdf_c++ -L/usr/local/lib 
+ifeq ($(DEF), DEBUG)
+        CFLAGS = -g -Wall -Wextra -I/usr/local/include
+else
+	ifeq ($(DEF), PROF)
+	        CFLAGS = -O3 -pg -I/usr/local/include
+	else
+		CFLAGS = -O3 -I/usr/local/include
+	endif
+endif
 
 all: $(BINS)
 
