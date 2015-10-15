@@ -26,6 +26,7 @@ void lenStar(const StarTree&, const Mdist&);
 
 // reset the distance of the nearest neighbor
 void njnearest(const Mdist&, StarTree&, StarTree::iterator&, StarTree::iterator&);
+void njnearestPlus(const Mdist&, StarTree&, StarTree::iterator&, StarTree::iterator&);
 
 // joint the two neighbors
 

@@ -18,7 +18,8 @@ Node* neighborJoint(Mdist& dm){
     while(nodes.size() > 3){
 	// get two nearest items and set length and distance matrix
 	StarTree::iterator itx, ity;
-	njnearest(dm, nodes, itx, ity);
+	// njnearest(dm, nodes, itx, ity);
+        njnearestPlus(dm, nodes, itx, ity);
 
 	// joint the two nearest neighbors
 	recjoint(dm, nodes, itx, ity);
@@ -70,6 +71,39 @@ void njnearest(const Mdist& dm, StarTree& nodes, StarTree::iterator& itx, StarTr
     	}
 	++iterA;
     }
+};
+
+void njnearestPlus(const Mdist& dm, StarTree& nodes, StarTree::iterator& itx, StarTree::iterator& ity){
+
+    // get the nearest neighbor
+    double minddxy(numeric_limits<double>::max());
+    size_t nNode(nodes.size());
+    double m2star(nNode);
+    m2star -= 2.0;
+    
+    vector<double> length(nNode);
+    vector<size_t> id(nNode);
+    for(int i=0; i<nNode; ++i){
+	length[i] = (*(nodes[i])).length/m2star;
+        id[i] = (*(nodes[i])).id;
+    }
+
+    int nx, ny;
+    for(int i=1; i<nNode; ++i){
+        size_t iId = id[i];
+        double iLen = length[i];
+        for(int j=0; j<i; ++j){
+    	    double ddxy = dm.getdist(iId, id[j]) - iLen - length[j];
+    	    if(ddxy < minddxy){
+                nx = j; ny = i;
+    		minddxy = ddxy;
+    	    }
+    	}
+    }
+
+    // get the two iterator
+    itx = nodes.begin() + nx;
+    ity = nodes.begin() + ny;
 };
 
 void joint(Mdist& dm, StarTree& nodes, StarTree::iterator& itx, StarTree::iterator& ity){
