@@ -1,6 +1,7 @@
 NEIGHBOR = tree.o stringOpt.o neighbor.o distmatrix.o neighborJoint.o
+NJPLUS   = tree.o stringOpt.o neighbor.o distmatrix.o neighborJointPlus.o
 
-BINS = neighbor 
+BINS = neighbor njplus
 
 CC = gcc -std=c11
 CXX = g++ -std=c++11
@@ -20,6 +21,9 @@ all: $(BINS)
 
 neighbor: $(NEIGHBOR)
 	$(CXX) $(NEIGHBOR) -o $@ $(LIBS) $(CFLAGS)	
+
+njplus: $(NJPLUS)
+	$(CXX) $(NJPLUS) -o $@ $(LIBS) $(CFLAGS)	
 
 #############################################################
 
